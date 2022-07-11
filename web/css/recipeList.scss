@@ -1,0 +1,47 @@
+$recipeDescriptionTransition: .3s;
+
+.recipeList {
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1vmin;
+
+  &__recipe {
+    border: 1px solid #000;
+    border-radius: 2vmin;
+    color: #fff;
+    display: grid;
+    grid-template-rows: 5vmin 1fr 2vmin;
+    overflow: hidden;
+    position: relative;
+    height: 30vmin;
+
+    &:hover {
+      .recipeList__recipeDescription {
+        opacity: 1;
+      }
+    }
+  }
+
+  &__recipeName {
+    background: rgba(0, 0, 0, .5);
+    font-size: 3vmin;
+    text-align: center;
+    width: 100%;
+  }
+  &__recipeDescription {
+    background: rgba(0, 0, 0, .5);
+    font-size: 2vmin;
+    opacity: 0;
+    padding: 0 1vmin;
+    text-overflow: ellipsis;
+    transition: opacity $recipeDescriptionTransition;
+  }
+  &__recipeLength {
+    background: rgba(0, 0, 0, .5);
+    font-size: 1.5vmin;
+    padding: 0 1.5vmin;
+    text-align: right;
+  }
+
+}

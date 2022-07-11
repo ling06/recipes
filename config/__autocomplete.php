@@ -19,7 +19,7 @@ class Yii {
 }
 
 /**
- * @property yii\rbac\DbManager $authManager 
+ * @property app\components\RbacPhpManager $authManager
  * @property \yii\web\User|__WebUser $user
  * 
  */

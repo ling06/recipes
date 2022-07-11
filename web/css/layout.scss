@@ -1,0 +1,25 @@
+@font-face {
+  font-family: 'Roboto';
+  src: url(fonts/Roboto-Regular.ttf);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+}
+
+html, body {
+  font: 400 14px/1.5 Roboto, sans-serif;
+}
+
+ul {
+  list-style: none;
+}
+
+.wrapper {
+  clear: both;
+  margin: auto;
+  width: 80%;
+}

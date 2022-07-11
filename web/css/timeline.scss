@@ -1,30 +1,25 @@
-@font-face {
-  font-family: "Roboto";
-  src: url(fonts/Roboto-Regular.ttf);
-}
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  text-decoration: none;
-}
-
-html, body {
-  font: 400 14px/1.5 Roboto, sans-serif;
-}
-
-ul {
-  list-style: none;
-}
-
-.wrapper {
-  clear: both;
-  margin: auto;
-  width: 80%;
-}
+$timelineBorder: 1px black solid;
+$timelineWidth: 20px;
+$timelineHeight: 500px;
+$timelineEventBorderWidth: 1px;
 
 .timeline {
-  background: linear-gradient(217deg, rgba(255, 0, 0, 0.5), rgba(255, 0, 0, 0) 70.71%), linear-gradient(127deg, rgba(0, 255, 0, 0.5), rgba(0, 255, 0, 0) 70.71%), linear-gradient(336deg, rgba(0, 0, 255, 0.5), rgba(0, 0, 255, 0) 70.71%);
+  background:
+    linear-gradient(
+      217deg,
+      rgba(255, 0, 0, 0.5),
+      rgba(255, 0, 0, 0) 70.71%
+    ),
+    linear-gradient(
+      127deg,
+      rgba(0, 255, 0, 0.5),
+      rgba(0, 255, 0, 0) 70.71%
+    ),
+    linear-gradient(
+      336deg,
+      rgba(0, 0, 255, 0.5),
+      rgba(0, 0, 255, 0) 70.71%
+    );
   display: inline-block;
   margin-top: 30px;
   position: relative;
@@ -32,28 +27,23 @@ ul {
   vertical-align: top;
   width: 50%;
 }
-
 .timeline__typeToggles {
   position: absolute;
   right: 0;
   top: 0;
 }
-
 .timeline__typeToggle {
   border-right: 1px solid #000;
   cursor: pointer;
   display: inline-block;
   padding: 0.3em 0.6em;
 }
-
 .timeline__typeToggle:last-child {
   border: none;
 }
-
 .timeline__typeToggle:hover {
   background: rgba(255, 255, 255, 0.3);
 }
-
 .timeline__name {
   bottom: 100%;
   font-size: 120%;
@@ -61,35 +51,29 @@ ul {
   text-align: center;
   width: 100%;
 }
-
 .timeline[data-type=visual] {
   height: 500px;
   text-align: center;
 }
-
 .timeline[data-type=visual] .timeline__events {
   border: 1px black solid;
   display: inline-block;
   height: 500px;
   width: 20px;
 }
-
 .timeline[data-type=visual]:before, .timeline[data-type=visual]:after {
   left: 50%;
   position: absolute;
   transform: translateX(-50%);
 }
-
 .timeline[data-type=visual]:before {
   content: attr(data-start);
   top: 0;
 }
-
 .timeline[data-type=visual]:after {
   bottom: 0;
   content: attr(data-end);
 }
-
 .timeline[data-type=visual] .timeline__event {
   background: rgba(0, 0, 0, 0.25);
   border: 1px solid #fff;
@@ -99,37 +83,31 @@ ul {
   position: absolute;
   transform: translateY(1.9em);
   text-align: left;
+  &:hover {
+    z-index: 1000;
+  }
 }
-.timeline[data-type=visual] .timeline__event:hover {
-  z-index: 1000;
-}
-
 .timeline[data-type=visual] .timeline__event:nth-child(odd) {
   border-radius: 4px 0 4px 4px;
   right: 50%;
   margin-right: 20px;
 }
-
 .timeline[data-type=visual] .timeline__event:nth-child(odd) .timeline__eventTime {
   right: 0;
   transform: translateX(1px);
 }
-
 .timeline[data-type=visual] .timeline__event:nth-child(even) {
   border-radius: 0 4px 4px 4px;
   left: 50%;
   margin-left: 20px;
 }
-
 .timeline[data-type=visual] .timeline__event:nth-child(even) .timeline__eventTime {
   left: 0;
   transform: translateX(-1px);
 }
-
 .timeline[data-type=visual] .timeline__event_expanded .timeline__eventDescription {
   display: inline-block;
 }
-
 .timeline[data-type=visual] .timeline__eventTime {
   background: rgba(0, 0, 0, 0.25);
   border: 1px solid #fff;
@@ -140,11 +118,9 @@ ul {
   padding: 0.2em 0.7em;
   position: absolute;
 }
-
 .timeline[data-type=visual] .timeline__eventDescription {
   display: none;
 }
-
 .timeline[data-type=text] .timeline__event {
   background: rgba(0, 0, 0, 0.25);
   border: 1px solid #fff;
@@ -152,78 +128,9 @@ ul {
   margin: 0.5em 1em;
   padding: 1em;
 }
-
 .timeline[data-type=text] .timeline__event_expanded {
   background: rgba(0, 255, 0, 0.25);
 }
-
 .timeline[data-type=text] .timeline__eventTime {
   font-size: 80%;
 }
-
-.recipe {
-  display: grid;
-  grid-template-columns: 25% 1fr;
-}
-.recipe__name {
-  background: #c0834b;
-  color: #ffffff;
-  font-size: 200%;
-  text-align: center;
-  grid-column-start: 1;
-  grid-column-end: 3;
-}
-.recipe__ingredients {
-  padding: 2vmin 5vmin;
-}
-.recipe__description {
-  padding: 2vmin 5vmin;
-}
-.recipe__timelines {
-  column-gap: 1vmin;
-  display: flex;
-  text-align: center;
-  grid-column-start: 1;
-  grid-column-end: 3;
-}
-
-.recipeList {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 1vmin;
-}
-.recipeList__recipe {
-  border: 1px solid #000;
-  border-radius: 2vmin;
-  color: #fff;
-  display: grid;
-  grid-template-rows: 5vmin 1fr 2vmin;
-  overflow: hidden;
-  position: relative;
-  height: 30vmin;
-}
-.recipeList__recipe:hover .recipeList__recipeDescription {
-  opacity: 1;
-}
-.recipeList__recipeName {
-  background: rgba(0, 0, 0, 0.5);
-  font-size: 3vmin;
-  text-align: center;
-  width: 100%;
-}
-.recipeList__recipeDescription {
-  background: rgba(0, 0, 0, 0.5);
-  font-size: 2vmin;
-  opacity: 0;
-  padding: 0 1vmin;
-  text-overflow: ellipsis;
-  transition: opacity 0.3s;
-}
-.recipeList__recipeLength {
-  background: rgba(0, 0, 0, 0.5);
-  font-size: 1.5vmin;
-  padding: 0 1.5vmin;
-  text-align: right;
-}
-
-/*# sourceMappingURL=styles.css.map */

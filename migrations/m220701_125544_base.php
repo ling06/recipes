@@ -22,6 +22,7 @@ class m220701_125544_base extends Migration
         $this->createTable('recipes', [
             'id' => $this->primaryKey(),
             'user_id' => $this->integer(),
+            'name' => $this->text(),
             'description' => $this->text(),
             'length' => $this->smallInteger()->unsigned(),
             'portions' => $this->tinyInteger()->unsigned(),

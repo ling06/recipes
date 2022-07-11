@@ -1,0 +1,29 @@
+@import "variables";
+@import "timeline";
+
+.recipe {
+  display: grid;
+  grid-template-columns: 25% 1fr;
+
+  &__name {
+    background: $_headerBGColor;
+    color: $_headerColor;
+    font-size: 200%;
+    text-align: center;
+    grid-column-start: 1;
+    grid-column-end: 3;
+  }
+  &__ingredients {
+    padding: 2vmin 5vmin;
+  }
+  &__description {
+    padding: 2vmin 5vmin;
+  }
+  &__timelines {
+    column-gap: 1vmin;
+    display: flex;
+    text-align: center;
+    grid-column-start: 1;
+    grid-column-end: 3;
+  }
+}
