@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\base\InvalidArgumentException;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
@@ -22,12 +23,22 @@ use app\models\queries\UserQuery;
  */
 class User extends ActiveRecord implements IdentityInterface
 {
+
+    public const SCENARIO_CHANGE_PASSWORD = 'changePassword';
+
     /**
      * {@inheritdoc}
      */
     public static function tableName(): string
     {
         return 'users';
+    }
+
+    public function scenarios(): array
+    {
+        $scenarios = parent::scenarios();
+        $scenarios[self::SCENARIO_CHANGE_PASSWORD] = ['password'];
+        return $scenarios;
     }
 
     /**
@@ -37,7 +48,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             [['login'], 'string', 'max' => 255],
-            [['password'], 'string', 'max' => 32],
+            [['password'], 'string', 'max' => 60],
             [['role'], 'string', 'max' => 50],
         ];
     }
@@ -53,6 +64,16 @@ class User extends ActiveRecord implements IdentityInterface
             'password' => Yii::t('app', 'Пароль'),
             'role' => Yii::t('app', 'Роль'),
         ];
+    }
+
+    public function beforeSave($insert): bool
+    {
+        if ($this->scenario === self::SCENARIO_CHANGE_PASSWORD && $this->password) {
+            $this->password = Yii::$app->security->generatePasswordHash($this->password);
+        } else {
+            $this->password = $this->oldAttributes['password'] ?? null;
+        }
+        return parent::beforeSave($insert);
     }
 
     /**
@@ -114,9 +135,20 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->id;
     }
 
+    // todo: добавить auth_key, когда понадобится
     public function validateAuthKey($authKey): bool
     {
         return $this->id === $authKey;
+    }
+
+    public function validatePassword($password): bool
+    {
+        return Yii::$app->security->validatePassword($password, $this->password);
+    }
+
+    public static function findByUsername(string $username): ?self
+    {
+        return self::findOne(['login' => $username]);
     }
 
 }

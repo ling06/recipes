@@ -48,10 +48,10 @@ class RecipeIngredient extends ActiveRecord
     public function attributeLabels(): array
     {
         return [
-            'recipe_id' => Yii::t('app', 'Recipe ID'),
-            'ingredient_id' => Yii::t('app', 'Ingredient ID'),
-            'value' => Yii::t('app', 'Value'),
-            'measure_unit' => Yii::t('app', 'Measure Unit'),
+            'recipe_id' => Yii::t('app', 'Рецепт'),
+            'ingredient_id' => Yii::t('app', 'Ингредиент'),
+            'value' => Yii::t('app', 'Количество'),
+            'measure_unit' => Yii::t('app', 'Измерение'),
         ];
     }
 

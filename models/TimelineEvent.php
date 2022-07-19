@@ -49,9 +49,9 @@ class TimelineEvent extends ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'timeline_id' => Yii::t('app', 'Timeline ID'),
-            'time' => Yii::t('app', 'Time'),
-            'name' => Yii::t('app', 'Name'),
-            'description' => Yii::t('app', 'Description'),
+            'time' => Yii::t('app', 'Время'),
+            'name' => Yii::t('app', 'Название'),
+            'description' => Yii::t('app', 'Описание'),
         ];
     }
 

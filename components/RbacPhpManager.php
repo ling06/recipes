@@ -4,6 +4,7 @@ namespace app\components;
 
 use app\models\User;
 use app\models\UserPermissions;
+use yii\helpers\VarDumper;
 use yii\rbac\Assignment;
 use yii\rbac\Item;
 use yii\rbac\Permission;
@@ -64,12 +65,19 @@ class RbacPhpManager extends PhpManager
     protected function load()
     {
         parent::load();
+        $this->loadAssignments();
+    }
+
+    protected function loadAssignments(?int $userId = null)
+    {
         $userRoles = User::find()
             ->select(['name' => 'role', 'user_id' => 'id'])
+            ->filterWhere(['id' => $userId])
             ->asArray()
             ->all();
         $userPermissions = UserPermissions::find()
             ->select(['name' => 'permission', 'user_id'])
+            ->filterWhere(['user_id' => $userId])
             ->asArray()
             ->all();
         $items = array_merge($userRoles, $userPermissions);
@@ -80,6 +88,12 @@ class RbacPhpManager extends PhpManager
                 'createdAt' => time(),
             ]);
         }
+    }
+
+    public function checkAccess($userId, $permissionName, $params = []): bool
+    {
+        $this->loadAssignments($userId);
+        return parent::checkAccess($userId, $permissionName, $params);
     }
 
 }

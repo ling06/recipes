@@ -3,7 +3,11 @@
 namespace app\models;
 
 use app\components\Helper;
+use app\models\behaviors\CreatorBehavior;
+use app\models\behaviors\SlugBehavior;
+use app\models\behaviors\TimestampBehavior;
 use Yii;
+use yii\behaviors\BlameableBehavior;
 use yii\db\ActiveRecord;
 use yii\db\ActiveQuery;
 use app\models\queries\RecipeQuery;
@@ -18,7 +22,7 @@ use app\models\queries\RecipeQuery;
  * @property int|null $length
  * @property int|null $portions
  * @property string|null $slug
- * @property int|null $type
+ * @property int|null $type_id
  * @property string|null $created_at
  * @property string|null $updated_at
  *
@@ -29,6 +33,7 @@ use app\models\queries\RecipeQuery;
  */
 class Recipe extends ActiveRecord
 {
+
     /**
      * {@inheritdoc}
      */
@@ -47,7 +52,7 @@ class Recipe extends ActiveRecord
             [['name', 'description'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
-            [['type'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['type_id' => 'id']],
+            [['type'], 'integer'],
         ];
     }
 
@@ -59,19 +64,35 @@ class Recipe extends ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'user_id' => Yii::t('app', 'User ID'),
-            'name' => Yii::t('app', 'Name'),
-            'description' => Yii::t('app', 'Description'),
-            'length' => Yii::t('app', 'Length'),
-            'portions' => Yii::t('app', 'Portions'),
+            'name' => Yii::t('app', 'Название'),
+            'description' => Yii::t('app', 'Описание'),
+            'length' => Yii::t('app', 'Длительность, мин'),
+            'portions' => Yii::t('app', 'Кол-во порций'),
+            'type_id' => Yii::t('app', 'Тип блюда'),
+            'slug' => Yii::t('app', 'Slug'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
         ];
     }
 
-    public function beforeSave($insert): bool
+    public function behaviors(): array
     {
-        $this->slug = static::createSlug($this->slug);
-        return parent::beforeSave($insert);
+        return [
+            'slug' => [
+                'class' => SlugBehavior::class,
+                'nameAttribute' => 'name',
+                'slugAttribute' => 'slug',
+            ],
+            'user' => [
+                'class' => CreatorBehavior::class,
+                'attribute' => 'user_id',
+            ],
+            'timestamp' => [
+                'class' => TimestampBehavior::class,
+                'createdAtAttribute' => 'created_at',
+                'updatedAtAttribute' => 'updated_at',
+            ],
+        ];
     }
 
     /**

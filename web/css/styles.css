@@ -10,7 +10,7 @@
 }
 
 html, body {
-  font: 400 14px/1.5 Roboto, sans-serif;
+  font: 400 16px/1.5 Roboto, sans-serif;
 }
 
 ul {
@@ -21,6 +21,65 @@ ul {
   clear: both;
   margin: auto;
   width: 80%;
+}
+
+.template[data-template] {
+  display: none;
+}
+
+.input {
+  border: 1px solid #000000;
+  border-radius: 2px;
+  font-family: inherit;
+  font-size: inherit;
+  padding: 2px 5px;
+}
+
+.btn {
+  background: #eeeeee;
+  border: 1px solid #000000;
+  border-radius: 4px;
+  color: #000000;
+  cursor: pointer;
+  display: inline-block;
+  padding: 5px 10px;
+  vertical-align: top;
+}
+.btn:hover {
+  background: #ffffff;
+}
+.btn_type_success {
+  border: 1px solid #163306;
+}
+.btn_type_warning {
+  border: 1px solid #332506;
+}
+.btn_type_error {
+  border: 1px solid #310505;
+}
+
+[class*=_type_success] {
+  background: #82d06d;
+  color: #163306;
+}
+[class*=_type_success]:hover {
+  background: #a3e791;
+}
+
+[class*=_type_warning] {
+  background: #d0c86d;
+  color: #332506;
+}
+[class*=_type_warning]:hover {
+  background: #eae499;
+}
+
+[class*=_type_error] {
+  background: #e38484;
+  color: #310505;
+}
+[class*=_type_error]:hover {
+  background: #efa7a7;
 }
 
 .timeline {
@@ -101,7 +160,7 @@ ul {
   text-align: left;
 }
 .timeline[data-type=visual] .timeline__event:hover {
-  z-index: 1000;
+  z-index: 1000 !important;
 }
 
 .timeline[data-type=visual] .timeline__event:nth-child(odd) {
@@ -224,6 +283,87 @@ ul {
   font-size: 1.5vmin;
   padding: 0 1.5vmin;
   text-align: right;
+}
+
+.recipeForm__recipeInfo {
+  width: 100%;
+}
+.recipeForm__recipeInfo input, .recipeForm__recipeInfo textarea, .recipeForm__recipeInfo select {
+  width: 100%;
+}
+.recipeForm__recipeInfo textarea {
+  height: 4em;
+  vertical-align: top;
+}
+.recipeForm__ingredients {
+  margin: 10px 0 0;
+}
+.recipeForm__ingredientButtons {
+  display: none;
+  position: absolute;
+  right: 5px;
+  top: 5px;
+}
+.recipeForm__ingredient {
+  margin: 5px 0 0;
+  position: relative;
+}
+.recipeForm__ingredient:hover .recipeForm__ingredientButtons {
+  display: block;
+}
+.recipeForm__timelines {
+  margin: 10px 0 0;
+}
+.recipeForm__timelineButtons {
+  display: none;
+  position: absolute;
+  right: 5px;
+  top: 5px;
+}
+.recipeForm__timeline {
+  border: 2px solid #000000;
+  border-radius: 10px;
+  margin: 5px 0 0;
+  padding: 5px;
+  position: relative;
+}
+.recipeForm__timeline:hover .recipeForm__timelineButtons {
+  display: block;
+}
+.recipeForm__timelineName {
+  display: block;
+}
+.recipeForm__timelineEvents {
+  margin: 10px 0 0;
+}
+.recipeForm__timelineEventsTitle {
+  margin: 5px 0 0;
+}
+.recipeForm__timelineEventButtons {
+  display: none;
+  position: absolute;
+  right: 5px;
+  top: 5px;
+}
+.recipeForm__timelineEvent {
+  border: 2px solid #000000;
+  border-radius: 10px;
+  margin: 5px 0 0;
+  padding: 5px;
+  position: relative;
+}
+.recipeForm__timelineEvent:hover .recipeForm__timelineEventButtons {
+  display: block;
+}
+.recipeForm__timelineEventDescription {
+  display: block;
+  margin: 5px 0 0;
+}
+.recipeForm__timelineEventDescription textarea {
+  width: 100%;
+}
+.recipeForm__buttons {
+  margin: 10px 0 0;
 }
 
 /*# sourceMappingURL=styles.css.map */

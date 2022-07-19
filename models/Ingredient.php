@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\models\traits\SelectListTrait;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -21,6 +22,8 @@ use app\models\queries\IngredientQuery;
  */
 class Ingredient extends ActiveRecord
 {
+    use SelectListTrait;
+
     /**
      * {@inheritdoc}
      */

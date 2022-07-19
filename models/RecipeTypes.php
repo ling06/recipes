@@ -6,6 +6,7 @@ use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use app\models\queries\RecipeTypesQuery;
+use app\models\traits\SelectListTrait;
 
 /**
  * This is the model class for table "recipe_types".
@@ -17,6 +18,8 @@ use app\models\queries\RecipeTypesQuery;
  */
 class RecipeTypes extends ActiveRecord
 {
+    use SelectListTrait;
+
     /**
      * {@inheritdoc}
      */

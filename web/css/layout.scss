@@ -1,3 +1,5 @@
+@import "variables";
+
 @font-face {
   font-family: 'Roboto';
   src: url(fonts/Roboto-Regular.ttf);
@@ -11,7 +13,7 @@
 }
 
 html, body {
-  font: 400 14px/1.5 Roboto, sans-serif;
+  font: 400 16px/1.5 Roboto, sans-serif;
 }
 
 ul {
@@ -22,4 +24,63 @@ ul {
   clear: both;
   margin: auto;
   width: 80%;
+}
+
+.template[data-template] {
+  display: none;
+}
+
+.input {
+  border: $_borderDefault;
+  border-radius: 2px;
+  font-family: inherit;
+  font-size: inherit;
+  padding: 2px 5px;
+}
+
+.btn {
+  background: $_backgroundDefault;
+  border: $_borderDefault;
+  border-radius: 4px;
+  color: $_colorDefault;
+  cursor: pointer;
+  display: inline-block;
+  padding: 5px 10px;
+  vertical-align: top;
+
+  &:hover {
+    background: $_backgroundDefaultHover;
+  }
+
+  &_type_success {
+    border: $_borderSuccess;
+  }
+  &_type_warning {
+    border: $_borderWarning;
+  }
+  &_type_error {
+    border: $_borderError;
+  }
+}
+
+[class*="_type_success"] {
+  background: $_backgroundSuccess;
+  color: $_colorSuccess;
+  &:hover {
+    background: $_backgroundSuccessHover;
+  }
+}
+[class*="_type_warning"] {
+  background: $_backgroundWarning;
+  color: $_colorWarning;
+  &:hover {
+    background: $_backgroundWarningHover;
+  }
+}
+[class*="_type_error"] {
+  background: $_backgroundError;
+  color: $_colorError;
+  &:hover {
+    background: $_backgroundErrorHover;
+  }
 }

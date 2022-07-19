@@ -12,4 +12,15 @@ class Helper
         return str_replace($rus, $lat, $text);
     }
 
+    public static function transpose(array $array): array
+    {
+        $ret = [];
+        foreach ($array as $key => $values) {
+            foreach ($values as $valueKey => $value) {
+                $ret[$valueKey][$key] = $value;
+            }
+        }
+        return $ret;
+    }
+
 }

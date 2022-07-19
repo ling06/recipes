@@ -84,7 +84,7 @@ $timelineEventBorderWidth: 1px;
   transform: translateY(1.9em);
   text-align: left;
   &:hover {
-    z-index: 1000;
+    z-index: 1000 !important;
   }
 }
 .timeline[data-type=visual] .timeline__event:nth-child(odd) {

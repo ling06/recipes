@@ -48,8 +48,8 @@ class Timeline extends ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'recipe_id' => Yii::t('app', 'Recipe ID'),
-            'name' => Yii::t('app', 'Name'),
-            'sort' => Yii::t('app', 'Sort'),
+            'name' => Yii::t('app', 'Название'),
+            'sort' => Yii::t('app', 'Сортировка'),
         ];
     }
 

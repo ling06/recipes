@@ -1,0 +1,98 @@
+.recipeForm {
+
+  &__recipeInfo {
+    width: 100%;
+    input, textarea, select {
+      width: 100%;
+    }
+    textarea {
+      height: 4em;
+      vertical-align: top;
+    }
+  }
+
+
+  &__ingredients {
+    margin: 10px 0 0;
+  }
+  &__ingredientButtons {
+    display: none;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+  }
+  &__ingredient {
+    margin: 5px 0 0;
+    position: relative;
+    &:hover {
+      .recipeForm__ingredientButtons {
+        display: block;
+      }
+    }
+  }
+
+
+  &__timelines {
+    margin: 10px 0 0;
+  }
+  &__timelineButtons {
+    display: none;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+  }
+  &__timeline {
+    border: 2px solid #000000;
+    border-radius: 10px;
+    margin: 5px 0 0;
+    padding: 5px;
+    position: relative;
+    &:hover {
+      .recipeForm__timelineButtons {
+        display: block;
+      }
+    }
+  }
+  &__timelineName {
+    display: block;
+  }
+
+
+  &__timelineEvents {
+    margin: 10px 0 0;
+  }
+  &__timelineEventsTitle {
+    margin: 5px 0 0;
+  }
+  &__timelineEventButtons {
+    display: none;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+  }
+  &__timelineEvent {
+    border: 2px solid #000000;
+    border-radius: 10px;
+    margin: 5px 0 0;
+    padding: 5px;
+    position: relative;
+    &:hover {
+      .recipeForm__timelineEventButtons {
+        display: block;
+      }
+    }
+  }
+  &__timelineEventDescription {
+    display: block;
+    margin: 5px 0 0;
+    textarea {
+      width: 100%;
+    }
+  }
+
+
+  &__buttons {
+    margin: 10px 0 0;
+  }
+
+}
