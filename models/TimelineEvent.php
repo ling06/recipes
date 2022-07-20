@@ -55,6 +55,11 @@ class TimelineEvent extends ActiveRecord
         ];
     }
 
+    public function extraFields(): array
+    {
+        return ['timeline'];
+    }
+
     /**
      * Gets query for [[Timeline]].
      *

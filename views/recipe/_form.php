@@ -15,6 +15,7 @@ use yii\widgets\ActiveForm;
 /**
  * @var View $this
  * @var RecipeCreateForm|null $model
+ * @var string $action
  */
 $this->registerJsFile('@web/js/recipe/create.js', ['position' => View::POS_END]);
 
@@ -33,11 +34,12 @@ $timelineEventLabels = $timelineEventModel->attributeLabels();
 
 <?php
 $form = ActiveForm::begin([
-    'action' => Url::to(['recipe/create']),
+    'action' => $action ?: null,
     'method' => 'post',
     'options' => ['class' => 'recipeForm'],
 ])
 ?>
+<?= $form->field($model, 'id', ['template' => '{input}'])->hiddenInput() ?>
 <table class="recipeForm__recipeInfo">
     <tr>
         <td colspan="3">
@@ -132,3 +134,12 @@ $form = ActiveForm::begin([
         <button class="btn btnMoveDown" data-parent=".recipeForm__timelineEvent" title="<?= Yii::t('app', 'Передвинуть ниже') ?>">&darr;</button>
     </div>
 </div>
+
+<?php
+if (!$model->isNewRecord) {
+    $data = $model->toArray(
+        ['id', 'name', 'description', 'length', 'portions', 'type_id'],
+        ['recipeIngredients', 'timelines.name', 'timelines.timelineEvents']
+    );
+    $this->registerJs('loadRecipe(document.querySelector(".recipeForm"), ' . json_encode($data) . ');', View::POS_READY);
+}

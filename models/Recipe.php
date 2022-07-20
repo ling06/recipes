@@ -4,6 +4,7 @@ namespace app\models;
 
 use app\components\Helper;
 use app\models\behaviors\CreatorBehavior;
+use app\models\behaviors\DeleteDependenciesBehavior;
 use app\models\behaviors\SlugBehavior;
 use app\models\behaviors\TimestampBehavior;
 use Yii;
@@ -75,6 +76,11 @@ class Recipe extends ActiveRecord
         ];
     }
 
+    public function extraFields(): array
+    {
+        return ['recipeIngredients', 'ingredients', 'timelines', 'user'];
+    }
+
     public function behaviors(): array
     {
         return [
@@ -91,6 +97,10 @@ class Recipe extends ActiveRecord
                 'class' => TimestampBehavior::class,
                 'createdAtAttribute' => 'created_at',
                 'updatedAtAttribute' => 'updated_at',
+            ],
+            'deleteDependencies' => [
+                'class' => DeleteDependenciesBehavior::class,
+                'dependencies' => ['recipeIngredients', 'timelines'],
             ],
         ];
     }
@@ -149,5 +159,17 @@ class Recipe extends ActiveRecord
         $name = preg_replace('/[^\w ]/', '', Helper::transliterate($name ?? ''));
         $name = str_replace(' ', '_', $name);
         return $name;
+    }
+
+    public function deleteDependencies(): self
+    {
+        foreach (['recipeIngredients', 'timelines'] as $dependency) {
+            if ($this->$dependency) {
+                foreach ($this->$dependency as $dependencyItem) {
+                    $dependencyItem->delete();
+                }
+            }
+        }
+        return $this;
     }
 }

@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\forms\RecipeCreateForm;
+use app\models\searchers\RecipeSearcher;
 use Yii;
 use app\models\Recipe;
 use yii\filters\AccessControl;
@@ -33,11 +34,23 @@ class RecipeController extends Controller
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['view'],
+                        'actions' => ['list', 'view'],
                     ],
                 ],
             ],
         ];
+    }
+
+    public function actionList(): string
+    {
+        $recipesProvider = (new RecipeSearcher())->search();
+        $recipes = $recipesProvider->query
+            ->offset($recipesProvider->pagination->offset)
+            ->limit($recipesProvider->pagination->limit)
+            ->all();
+        return $this->render('//recipe/list', [
+            'recipes' => $recipes,
+        ]);
     }
 
     public function actionView($id, $slug)
@@ -57,6 +70,7 @@ class RecipeController extends Controller
     public function actionCreate()
     {
         $model = new RecipeCreateForm();
+
         $post = Yii::$app->request->post();
         if ($model->load($post, 'RecipeCreateForm')) {
             $model->Timeline = $post['Timeline'] ?? [];
@@ -64,11 +78,12 @@ class RecipeController extends Controller
             $transaction = Yii::$app->db->beginTransaction();
             if ($model->save()) {
                 $transaction->commit();
-                return $this->redirect(['recipes/index']);
+                return $this->redirect(['recipe/update', 'id' => $model->id]);
             } else {
                 $transaction->rollBack();
             }
         }
+
         return $this->render('create', [
             'model' => $model,
         ]);
@@ -76,11 +91,27 @@ class RecipeController extends Controller
 
     public function actionUpdate($id)
     {
-        $model = Recipe::findOne($id);
-        $post = Yii::$app->request->post();
-        if ($model->load($post)) {
-            var_dump($post);
+        $model = RecipeCreateForm::findOne($id);
+        if (!$model) {
+            throw new NotFoundHttpException();
         }
+
+        $post = Yii::$app->request->post();
+        if ($model->load($post, 'RecipeCreateForm')) {
+            $model->Timeline = $post['Timeline'] ?? [];
+            $model->Ingredient = $post['Ingredient'] ?? [];
+            $transaction = Yii::$app->db->beginTransaction();
+
+            $model->deleteDependencies();
+
+            if ($model->save()) {
+                $transaction->commit();
+                return $this->redirect(['recipe/update', 'id' => $model->id]);
+            } else {
+                $transaction->rollBack();
+            }
+        }
+
         return $this->render('update', [
             'model' => $model,
         ]);

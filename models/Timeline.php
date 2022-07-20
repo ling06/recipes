@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\models\behaviors\DeleteDependenciesBehavior;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -50,6 +51,21 @@ class Timeline extends ActiveRecord
             'recipe_id' => Yii::t('app', 'Recipe ID'),
             'name' => Yii::t('app', 'Название'),
             'sort' => Yii::t('app', 'Сортировка'),
+        ];
+    }
+
+    public function extraFields(): array
+    {
+        return ['recipe', 'timelineEvents'];
+    }
+
+    public function behaviors(): array
+    {
+        return [
+            'deleteDependencies' => [
+                'class' => DeleteDependenciesBehavior::class,
+                'dependencies' => ['timelineEvents'],
+            ],
         ];
     }
 

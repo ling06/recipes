@@ -25,7 +25,7 @@ class TimelineForm extends Timeline
     {
         if (parent::save($runValidation, $attributeNames)) {
             if ($this->Event) {
-                foreach (Helper::transpose($this->Event['name']) as $eventData) {
+                foreach (Helper::transpose($this->Event) as $eventData) {
                     $event = new TimelineEvent($eventData);
                     $event->timeline_id = $this->id;
                     if (!$event->save()) {

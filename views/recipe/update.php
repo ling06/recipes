@@ -1,6 +1,7 @@
 <?php
 
 use app\models\forms\RecipeCreateForm;
+use yii\helpers\Url;
 use yii\web\View;
 
 /**
@@ -13,4 +14,5 @@ use yii\web\View;
 
 <?= $this->context->renderPartial('_form', [
     'model' => $model,
+    'action' => Url::to(['recipe/update', 'id' => $model->id]),
 ]) ?>

@@ -28,6 +28,11 @@ class RecipeIngredient extends ActiveRecord
         return 'recipe_ingredients';
     }
 
+    public static function primaryKey(): array
+    {
+        return ['recipe_id', 'ingredient_id'];
+    }
+
     /**
      * {@inheritdoc}
      */
