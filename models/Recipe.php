@@ -26,6 +26,7 @@ use app\models\queries\RecipeQuery;
  * @property int|null $type_id
  * @property string|null $created_at
  * @property string|null $updated_at
+ * @property int $status
  *
  * @property RecipeIngredient[] $recipeIngredients
  * @property Ingredient[] $ingredients
@@ -34,6 +35,10 @@ use app\models\queries\RecipeQuery;
  */
 class Recipe extends ActiveRecord
 {
+
+    public const STATUS_ACTIVE = 1;
+    public const STATUS_DELETED = 2;
+    public const STATUS_DRAFT = 3; // @todo
 
     /**
      * {@inheritdoc}
@@ -53,7 +58,7 @@ class Recipe extends ActiveRecord
             [['name', 'description'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
-            [['type'], 'integer'],
+            [['type', 'status'], 'integer'],
         ];
     }
 
@@ -73,6 +78,7 @@ class Recipe extends ActiveRecord
             'slug' => Yii::t('app', 'Slug'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
+            'status' => Yii::t('app', 'Статус'),
         ];
     }
 
@@ -171,5 +177,37 @@ class Recipe extends ActiveRecord
             }
         }
         return $this;
+    }
+
+    public function canBeUpdated(?int $userId = null): bool
+    {
+        if ($userId) {
+            $user = User::findOne($userId);
+            if (!$user) return false;
+            return \Yii::$app->authManager->checkAccess($userId, 'recipe_update_all') || $this->user_id === $userId;
+        }
+        return Yii::$app->user->can('recipe_update_all') || $this->user_id === (Yii::$app->user->id ?? null);
+    }
+
+    public function canBeDeleted(?int $userId = null): bool
+    {
+        if ($userId) {
+            $user = User::findOne($userId);
+            if (!$user) return false;
+            return \Yii::$app->authManager->checkAccess($userId, 'recipe_delete_all') || $this->user_id === $userId;
+        }
+        return Yii::$app->user->can('recipe_delete_all') || $this->user_id === (Yii::$app->user->id ?? null);
+    }
+
+    public function deleteSoft(): bool
+    {
+        $this->status = self::STATUS_DELETED;
+        return $this->save();
+    }
+
+    public function restore(): bool
+    {
+        $this->status = self::STATUS_ACTIVE;
+        return $this->save();
     }
 }

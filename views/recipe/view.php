@@ -10,7 +10,12 @@ use yii\helpers\Url;
 ?>
 
 <div class="recipe">
-    <div class="recipe__name"><?= $recipe->name ?></div>
+    <div class="recipe__name">
+        <?= $recipe->name ?>
+        <?php if ($recipe->canBeUpdated()): ?>
+            <a class="fa fa-edit recipe__editLink" href="<?= Url::to(['recipe/update', 'id' => $recipe->id]) ?>" title="<?= Yii::t('app', 'Редактировать') ?>"></a>
+        <?php endif; ?>
+    </div>
     <ul class="recipe__ingredients">
         <?php foreach ($recipe->recipeIngredients as $recipeIngredient): ?>
             <li class="recipe__ingredient">
@@ -53,5 +58,21 @@ use yii\helpers\Url;
                 </div>
             </div>
         <?php endforeach; ?>
+    </div>
+
+    <div class="recipe__actions">
+        <?php if ($recipe->canBeUpdated()): ?>
+        <a href="<?= Url::to(['recipe/update', 'id' => $recipe->id]) ?>" class="btn btn_type_success" title="<?= Yii::t('app', 'Редактировать') ?>">
+            <i class="fa fa-edit"></i>
+        </a>
+        <?php endif; ?>
+        <?php if ($recipe->canBeDeleted()): ?>
+        <form action="<?= Url::to(['recipe/delete', 'id' => $recipe->id]) ?>" method="post" class="recipe__deleteForm">
+            <input type="hidden" name="<?= Yii::$app->request->csrfParam ?>" value="<?= Yii::$app->request->csrfToken ?>">
+            <button class="btn btn_type_error recipe__deleteFormButton" title="<?= Yii::t('app', 'Удалить') ?>">
+                <i class="fa fa-trash-can"></i>
+            </button>
+        </form>
+        <?php endif; ?>
     </div>
 </div>

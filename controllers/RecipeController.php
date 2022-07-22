@@ -7,7 +7,9 @@ use app\models\searchers\RecipeSearcher;
 use Yii;
 use app\models\Recipe;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\helpers\VarDumper;
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 
 class RecipeController extends Controller
@@ -29,7 +31,7 @@ class RecipeController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['create', 'update'],
+                        'actions' => ['create', 'update', 'delete'],
                         'roles' => ['admin'],
                     ],
                     [
@@ -38,12 +40,18 @@ class RecipeController extends Controller
                     ],
                 ],
             ],
+            'verbs' => [
+                'class' => VerbFilter::class,
+                'actions' => [
+                    'delete' => ['POST', 'DELETE'],
+                ],
+            ],
         ];
     }
 
     public function actionList(): string
     {
-        $recipesProvider = (new RecipeSearcher())->search();
+        $recipesProvider = (new RecipeSearcher(['status' => Recipe::STATUS_ACTIVE]))->search();
         $recipes = $recipesProvider->query
             ->offset($recipesProvider->pagination->offset)
             ->limit($recipesProvider->pagination->limit)
@@ -91,7 +99,11 @@ class RecipeController extends Controller
 
     public function actionUpdate($id)
     {
-        $model = RecipeCreateForm::findOne($id);
+        $model = RecipeCreateForm::find();
+        if (!Yii::$app->user->can('recipe-update-all')) {
+            $model->isVisible();
+        }
+        $model = $model->where(['id' => $id])->one();
         if (!$model) {
             throw new NotFoundHttpException();
         }
@@ -115,6 +127,24 @@ class RecipeController extends Controller
         return $this->render('update', [
             'model' => $model,
         ]);
+    }
+
+    public function actionDelete($id)
+    {
+        $model = RecipeCreateForm::find();
+        if (!Yii::$app->user->can('recipe-delete-all')) {
+            $model->isVisible();
+        }
+        $model = $model->where(['id' => $id])->one();
+        if (!$model) {
+            throw new NotFoundHttpException();
+        }
+        if (!$model->canBeDeleted()) {
+            throw new ForbiddenHttpException();
+        }
+
+        $model->deleteSoft();
+        return $this->redirect(['recipes/index']);
     }
 
 }

@@ -1,0 +1,19 @@
+.topmenu {
+  .nav-item {
+    display: inline-block;
+  }
+  .nav-link {
+    color: #000;
+    display: block;
+    padding: 5px 10px;
+    &:hover {
+      color: #777;
+    }
+    &.active {
+      background: #eee;
+      &:before {
+        content: '⇨ ';
+      }
+    }
+  }
+}

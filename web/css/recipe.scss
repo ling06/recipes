@@ -12,6 +12,11 @@
     text-align: center;
     grid-column-start: 1;
     grid-column-end: 3;
+
+    .recipe__editLink {
+      font-size: 75%;
+      color: $_headerBorderColor;
+    }
   }
   &__ingredients {
     padding: 2vmin 5vmin;
@@ -25,5 +30,20 @@
     text-align: center;
     grid-column-start: 1;
     grid-column-end: 3;
+  }
+
+  &__actions {
+    font-size: 150%;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    padding: 20px 0 0;
+    text-align: center;
+  }
+  &__deleteForm {
+    display: inline-block;
+  }
+  &__deleteFormButton {
+    font-size: inherit;
+    line-height: inherit;
   }
 }

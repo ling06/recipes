@@ -1,3 +1,22 @@
+@charset "UTF-8";
+.topmenu .nav-item {
+  display: inline-block;
+}
+.topmenu .nav-link {
+  color: #000;
+  display: block;
+  padding: 5px 10px;
+}
+.topmenu .nav-link:hover {
+  color: #777;
+}
+.topmenu .nav-link.active {
+  background: #eee;
+}
+.topmenu .nav-link.active:before {
+  content: "⇨ ";
+}
+
 @font-face {
   font-family: "Roboto";
   src: url(fonts/Roboto-Regular.ttf);
@@ -232,6 +251,10 @@ ul {
   grid-column-start: 1;
   grid-column-end: 3;
 }
+.recipe__name .recipe__editLink {
+  font-size: 75%;
+  color: #6e3f13;
+}
 .recipe__ingredients {
   padding: 2vmin 5vmin;
 }
@@ -244,6 +267,20 @@ ul {
   text-align: center;
   grid-column-start: 1;
   grid-column-end: 3;
+}
+.recipe__actions {
+  font-size: 150%;
+  grid-column-start: 1;
+  grid-column-end: 3;
+  padding: 20px 0 0;
+  text-align: center;
+}
+.recipe__deleteForm {
+  display: inline-block;
+}
+.recipe__deleteFormButton {
+  font-size: inherit;
+  line-height: inherit;
 }
 
 .recipeList {

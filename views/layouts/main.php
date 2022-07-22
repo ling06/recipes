@@ -5,6 +5,7 @@
 
 use app\assets\AppAsset;
 use yii\bootstrap4\Html;
+use app\widgets\NavNoBootstrap;
 
 AppAsset::register($this);
 ?>
@@ -21,7 +22,30 @@ AppAsset::register($this);
 <body>
 <?php $this->beginBody() ?>
 
-<header class="wrapper"></header>
+<header class="wrapper">
+    <?= NavNoBootstrap::widget([
+        'items' => [
+            [
+                'label' => Yii::t('app', 'Список рецептов'),
+                'url' => ['recipes/index'],
+            ],
+            [
+                'label' => Yii::t('app', 'Войти'),
+                'url' => ['site/login'],
+                'visible' => Yii::$app->user->isGuest,
+            ],
+            [
+                'label' => Yii::t('app', 'Выйти'),
+                'url' => ['site/logout'],
+                'visible' => !Yii::$app->user->isGuest,
+            ],
+        ],
+        'options' => [
+            'class' => 'topmenu',
+        ],
+        'route' => ltrim(\yii\helpers\Url::to(), '/'),
+    ]) ?>
+</header>
 
 <main class="wrapper">
     <?= $content ?>

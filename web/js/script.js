@@ -9,3 +9,15 @@ document.addEventListener('click', e => {
     }
 
 });
+
+document.addEventListener('submit', e => {
+    let target = e.target;
+
+    if (target.closest('.recipe__deleteForm')) {
+        if (!confirm('Точно удалить рецепт?')) {
+            e.preventDefault();
+            return false;
+        }
+    }
+
+});
