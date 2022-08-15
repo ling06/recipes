@@ -10,9 +10,12 @@ trait SelectListTrait
      * @param mixed $name
      * @return array
      */
-    public static function getSelectList($id, $name): array
+    public static function getSelectList(mixed $id = 'id', mixed $name = 'name', ?string $defaultValue = null): array
     {
         $list = [];
+        if ($defaultValue !== null) {
+            $list[''] = $defaultValue;
+        }
         $values = static::find()->all();
         foreach ($values as $value) {
             if (is_callable($id)) {

@@ -7,6 +7,7 @@ use yii\helpers\Url;
  * @var Recipe $recipe
  */
 
+$searchModel = new \app\models\searchers\RecipeSearcher();
 ?>
 
 <div class="recipe">
@@ -19,7 +20,7 @@ use yii\helpers\Url;
     <ul class="recipe__ingredients">
         <?php foreach ($recipe->recipeIngredients as $recipeIngredient): ?>
             <li class="recipe__ingredient">
-                <a href="<?= Url::to([]) ?>" class="recipe__ingredientName"><?= $recipeIngredient->ingredient->name ?></a>
+                <a href="<?= Url::to(['recipes/index', $searchModel->formName() => ['ingredient_id' => $recipeIngredient->ingredient_id]]) ?>" class="recipe__ingredientName"><?= $recipeIngredient->ingredient->name ?></a>
                 <?php if ($recipeIngredient->ingredient->link): ?>
                     <a href="<?= $recipeIngredient->ingredient->link ?>" class="recipe__ingredientLink" title="<?= Yii::t('app', 'Как приготовить') ?>">
                         &#128279;
@@ -41,15 +42,19 @@ use yii\helpers\Url;
         <?php foreach ($recipe->timelines as $timeline): ?>
             <div class="timeline" data-type="visual" data-start="0" data-end="<?= $recipe->length ?>">
                 <div class="timeline__typeToggles">
-                    <span class="timeline__typeToggle" data-type="visual"><?= Yii::t('app', 'шкала') ?></span>
-                    <span class="timeline__typeToggle" data-type="text"><?= Yii::t('app', 'текст') ?></span>
+                    <span class="timeline__typeToggle stateToggle" data-parent=".timeline" data-type="type" data-state="visual"><?= Yii::t('app', 'шкала') ?></span>
+                    <span class="timeline__typeToggle stateToggle" data-parent=".timeline" data-type="type" data-state="text"><?= Yii::t('app', 'текст') ?></span>
                 </div>
                 <?php if ($timeline->name): ?>
                     <div class="timeline__name"><?= $timeline->name ?></div>
                 <?php endif; ?>
                 <div class="timeline__events">
                     <?php foreach ($timeline->timelineEvents as $i => $timelineEvent): ?>
-                        <div class="timeline__event" style="z-index:<?= $timelineEvent->id ?>;top: <?= round(100 * ($timelineEvent->time / $recipe->length), 2) ?>%">
+                        <div class="timeline__event classToggle"
+                             data-class="timeline__event_expanded"
+                             data-parent=".timeline__event"
+                             style="z-index:<?= $timelineEvent->id ?>;top: <?= round(100 * ($timelineEvent->time / $recipe->length), 2) ?>%"
+                        >
                             <div class="timeline__eventTime"><?= $timelineEvent->time ?>&nbsp;<?= Yii::t('app', 'мин') ?></div>
                             <div class="timeline__eventName"><?= $timelineEvent->name ?></div>
                             <div class="timeline__eventDescription"><?= $timelineEvent->description ?></div>
@@ -67,7 +72,12 @@ use yii\helpers\Url;
         </a>
         <?php endif; ?>
         <?php if ($recipe->canBeDeleted()): ?>
-        <form action="<?= Url::to(['recipe/delete', 'id' => $recipe->id]) ?>" method="post" class="recipe__deleteForm">
+        <form
+            action="<?= Url::to(['recipe/delete', 'id' => $recipe->id]) ?>"
+            method="post"
+            class="recipe__deleteForm confirmDelete"
+            data-message="<?= Yii::t('app', 'Точно удалить рецепт?') ?>"
+        >
             <input type="hidden" name="<?= Yii::$app->request->csrfParam ?>" value="<?= Yii::$app->request->csrfToken ?>">
             <button class="btn btn_type_error recipe__deleteFormButton" title="<?= Yii::t('app', 'Удалить') ?>">
                 <i class="fa fa-trash-can"></i>

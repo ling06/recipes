@@ -1,0 +1,57 @@
+@import "variables";
+
+$inputWidth: 400px;
+
+.recipeSearchForm {
+  margin: 0 0 10px;
+
+  &__header {
+    background: $_backgroundSuccess;
+    border: $_borderSuccess;
+    color: $_colorSuccess;
+    cursor: pointer;
+    padding: 5px 10px;
+    &:hover {
+      background: $_backgroundSuccessHover;
+    }
+  }
+  &__content {
+    border: $_borderSuccess;
+    border-top: none;
+    display: none;
+    padding: 0 10px 5px;
+  }
+  &__row {}
+  &__rowTitle {
+    font-size: 90%;
+  }
+  &__rowInput {}
+
+  &_opened {
+    .recipeSearchForm__content {
+      display: block;
+    }
+  }
+
+  input {
+    min-width: $inputWidth;
+  }
+  .select2-container--krajee-bs3 {
+    display: inline-block;
+    min-width: $inputWidth;
+    width: auto !important;
+  }
+  .select2-container--krajee-bs3 .select2-selection {
+    border: $_borderDefault;
+    border-radius: $inputBorderRadius;
+    height: 30px;
+    min-height: 0;
+  }
+  .select2-container--krajee-bs3 .select2-selection--multiple .select2-selection__choice {
+    margin: 3px 0 0 6px;
+  }
+  .select2-container--krajee-bs3 .select2-selection--single .select2-selection__arrow {
+    height: 28px;
+  }
+
+}

@@ -4,10 +4,13 @@ use app\models\Recipe;
 use yii\helpers\Url;
 
 /**
+ * @var \yii\web\View $this;
  * @var Recipe[] $recipes
  */
 
 ?>
+
+<?= $this->context->renderPartial('_search') ?>
 
 <?php if (empty($recipes)): ?>
     <div class="recipeList recipeList_empty"><?= Yii::t('app', 'Рецептов не найдено :(') ?></div>

@@ -8,7 +8,6 @@ use app\models\Timeline;
 use app\models\TimelineEvent;
 use app\models\forms\RecipeCreateForm;
 use yii\helpers\Html;
-use yii\helpers\Url;
 use yii\web\View;
 use yii\widgets\ActiveForm;
 
@@ -20,8 +19,8 @@ use yii\widgets\ActiveForm;
 $this->registerJsFile('@web/js/recipe/create.js', ['position' => View::POS_END]);
 
 $recipeLabels = $model->attributeLabels();
-$recipeTypesList = RecipeTypes::getSelectList('id', 'name');
-$ingredientsList = Ingredient::getSelectList('id', 'name');
+$recipeTypesList = RecipeTypes::getSelectList();
+$ingredientsList = Ingredient::getSelectList();
 $measureUnitsList = MeasureUnit::getSelectList('name', 'name');
 
 $ingredientModel = new RecipeIngredient();

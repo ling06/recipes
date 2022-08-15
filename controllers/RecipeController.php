@@ -51,7 +51,10 @@ class RecipeController extends Controller
 
     public function actionList(): string
     {
-        $recipesProvider = (new RecipeSearcher(['status' => Recipe::STATUS_ACTIVE]))->search();
+        $recipesSearcher = new RecipeSearcher();
+        $recipesSearcher->load(Yii::$app->request->get());
+        $recipesSearcher->status = Recipe::STATUS_ACTIVE;
+        $recipesProvider = $recipesSearcher->search();
         $recipes = $recipesProvider->query
             ->offset($recipesProvider->pagination->offset)
             ->limit($recipesProvider->pagination->limit)

@@ -23,8 +23,6 @@
 }
 * {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
   text-decoration: none;
 }
 
@@ -32,8 +30,21 @@ html, body {
   font: 400 16px/1.5 Roboto, sans-serif;
 }
 
+body {
+  background: #fff;
+}
+
 ul {
   list-style: none;
+}
+
+a:hover, a:active, a:focus {
+  color: inherit;
+  text-decoration: none;
+}
+
+main {
+  padding: 10px 0 0;
 }
 
 .wrapper {
@@ -401,6 +412,52 @@ ul {
 }
 .recipeForm__buttons {
   margin: 10px 0 0;
+}
+
+.recipeSearchForm {
+  margin: 0 0 10px;
+}
+.recipeSearchForm__header {
+  background: #82d06d;
+  border: 1px solid #163306;
+  color: #163306;
+  cursor: pointer;
+  padding: 5px 10px;
+}
+.recipeSearchForm__header:hover {
+  background: #a3e791;
+}
+.recipeSearchForm__content {
+  border: 1px solid #163306;
+  border-top: none;
+  display: none;
+  padding: 0 10px 5px;
+}
+.recipeSearchForm__rowTitle {
+  font-size: 90%;
+}
+.recipeSearchForm_opened .recipeSearchForm__content {
+  display: block;
+}
+.recipeSearchForm input {
+  min-width: 400px;
+}
+.recipeSearchForm .select2-container--krajee-bs3 {
+  display: inline-block;
+  min-width: 400px;
+  width: auto !important;
+}
+.recipeSearchForm .select2-container--krajee-bs3 .select2-selection {
+  border: 1px solid #000000;
+  border-radius: 2px;
+  height: 30px;
+  min-height: 0;
+}
+.recipeSearchForm .select2-container--krajee-bs3 .select2-selection--multiple .select2-selection__choice {
+  margin: 3px 0 0 6px;
+}
+.recipeSearchForm .select2-container--krajee-bs3 .select2-selection--single .select2-selection__arrow {
+  height: 28px;
 }
 
 /*# sourceMappingURL=styles.css.map */

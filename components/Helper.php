@@ -2,6 +2,8 @@
 
 namespace app\components;
 
+use Yii;
+
 class Helper
 {
 
@@ -21,6 +23,11 @@ class Helper
             }
         }
         return $ret;
+    }
+
+    public static function getBaseUrl()
+    {
+        return Yii::$app->controller->id . '/' . Yii::$app->controller->action->id;
     }
 
 }
